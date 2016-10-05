@@ -1,0 +1,107 @@
+package tron;
+
+//Importa la clase nodo
+import tron.Nodo;
+
+/**
+ * Esta clase define la pila de poderes y sus metodos
+ * @author Fabian,Adonnis,Erick,Victor
+ */
+public class Pila {
+	// Atributos de la clase
+	private int _capacidad;
+	private Nodo _fin;
+	private Nodo _nuevoNodo;
+	private Nodo _temporal;
+	private String _nombrePoder;
+	private String _primero;
+	private String _segundo;
+
+	/**
+	 * Constructor de la estructura de la pila con el mismo nombre de la clase
+	 */
+	public Pila() {
+		_fin = null;
+		_capacidad = 0;
+	}
+
+	/**
+	 * Metodo que apila un objeto a la pila de poderes si su capacidad es menor
+	 * a 2 poderes
+	 * @param _nombrePoder
+	 *            El parametro nombrePoder define el nombre del objeto que se
+	 *            agrega a la pila
+	 */
+	public void apilar(String _nombrePoder) {
+		if (_capacidad < 2) {
+			_nuevoNodo = new Nodo(_nombrePoder);
+			if (_fin == null) {
+				_fin = _nuevoNodo;
+			} else {
+				_nuevoNodo.set_siguiente(_fin);
+				_fin = _nuevoNodo;
+			}
+			_capacidad++;
+		}
+	}
+
+	/**
+	 * Metodo que desapila un objeto de la pila de poderes
+	 * @return El nombre del poder que se desapilo de la pila de poderes
+	 */
+	public String desapilar() {
+		if (_fin == null) {
+			return null;
+		} else {
+			_nombrePoder = _fin.get_elemento();
+			_fin = _fin.get_siguiente();
+			_capacidad--;
+			return _nombrePoder;
+		}
+	}
+
+	/**
+	 * Metodo que verifica si la pila de poderes esta vacia
+	 * 
+	 * @return Un valor booleano si la pila de poderes esta vacia o no
+	 */
+	public boolean estaVacia() {
+		return (_capacidad == 0);
+	}
+
+	/**
+	 * Metodo que imprime la pila de poderes
+	 */
+	public void imprimir() {
+		_temporal = _fin;
+		System.out.println("Listados de todos los elementos de la pila.");
+		while (_temporal != null) {
+			System.out.println(_temporal.get_elemento());
+			_temporal = _temporal.get_siguiente();
+		}
+	}
+
+	/**
+	 * Metodo que intercambia el tope de la pila por otro elemento
+	 */
+	public void intercambiar() {
+		if (_capacidad == 2) {
+			_primero = desapilar();
+			_segundo = desapilar();
+			apilar(_primero);
+			apilar(_segundo);
+		}
+	}
+	
+	/**
+	 * Metodo que devuele el elemento en el tope de la pila de poderes
+	 * @return El elemento en el tope de la pila de poderes
+	 */
+	public Object top(){
+		if (_fin == null){
+			return null;
+		} else {
+			return _fin.get_elemento();
+		}
+	}
+}
