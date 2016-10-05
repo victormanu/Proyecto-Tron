@@ -1,0 +1,30 @@
+package tron;
+
+//Importa la libreria random de Java
+import java.util.Random;
+
+/**
+ * Esta clase define el item de celda de combustible 
+ * @author Fabian,Adonnis,Erick,Victor
+ */
+public class CeldaCombustible {
+	//Atributos de la clase celda de combustible
+	private int _valor;
+	private static Random _random = new Random();
+	
+	/**
+	 * Constructor y asignacion de valor de celda de combustible
+	 */
+	public CeldaCombustible() {
+		int _valoresCombustible[] = { 25, 50, 75 };
+		this._valor = _valoresCombustible[_random.nextInt(_valoresCombustible.length)];
+	}
+	
+	/**
+	 * Metodo que devuelve el valor del item celda de combustible
+	 * @return El valor de celda de combustible
+	 */
+	public int getValor() {
+		return _valor;
+	}
+}
