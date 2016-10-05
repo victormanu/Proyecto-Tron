@@ -1,0 +1,30 @@
+package tron;
+
+//Importa la libreria random de Java
+import java.util.Random;
+
+/**
+ * Esta clase define el item de crecimiento de estela
+ * @author Fabian,Adonnis,Erick,Victor
+ */
+public class CrecimientoEstela {
+	//Atributos de la clase de crecimiento de estela
+	private int _valor;
+	private static Random _random = new Random();
+	
+	/**
+	 * Constructor y asignacion de valor aleatorio del item crecimiento de estela
+	 */
+	public CrecimientoEstela() {
+		int _valoresEstela[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		_valor = _valoresEstela[_random.nextInt(_valoresEstela.length)];
+	}
+	
+	/**
+	 * Metodo que devuelve el valor del item crecimiento de estela
+	 * @return El valor del item de crecimiento de estela
+	 */
+	public int getValor() {
+		return _valor;
+	}
+}
