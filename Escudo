@@ -1,0 +1,25 @@
+package tron;
+
+/**
+ * Esta clase define el poder de escudo
+ * @author Fabian,Adonnis,Erick,Victor
+ */
+public class Escudo {
+	//Atributos de la clase escudo
+	private int _tiempo;
+	
+	/**
+	 * Constructor y asignacion de tiempo del poder escudo
+	 */
+	public Escudo() {
+		_tiempo = 5;
+	}
+	
+	/**
+	 * Metodo que devuelve el tiempo de duracion del poder escudo
+	 * @return El tiempo de duracion del poder escudo
+	 */
+	public int getTiempo() {
+		return _tiempo;
+	}
+}
