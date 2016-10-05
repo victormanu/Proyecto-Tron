@@ -1,0 +1,85 @@
+package tron;
+
+//Importa la clase nodo
+import tron.Nodo;
+
+/**
+ * Esta clase define la estructura de datos cola
+ * @author Fabian,Adonnis,Erick,Victor
+ */
+public class Cola {
+	// Atributos de la clase
+	private Nodo _inicio;
+	private Nodo _nuevoNodo;
+	private Nodo _fin;
+	private int _capacidad;
+
+	/**
+	 * Constructor de la estructura cola con el mismo nombre de la clase
+	 */
+	public Cola() {
+		_fin = null;
+		_capacidad = 0;
+	}
+
+	/**
+	 * Metodo que inserta un objeto en la cola
+	 * @param _objeto
+	 *            El parametro _objeto define el objeto que se
+	 *            agrega a la cola
+	 */
+	public void encolar(String _objeto) {
+		_nuevoNodo = new Nodo(_objeto);
+		if (_inicio == null) {
+			_inicio = _nuevoNodo;
+		} else {
+			_fin.set_siguiente(_nuevoNodo);
+			_fin = _nuevoNodo;
+		}
+		_capacidad++;
+	}
+
+	/**
+	 * Metodo que extrae un objeto en la cola
+	 * @return El nombre del usuario que se extrajo de la cola
+	 */
+	public String desencolar() {
+		if (_inicio == null) {
+			return null;
+		} else {
+			String _objeto = _inicio.get_elemento();
+			_inicio = _inicio.get_siguiente();
+			_capacidad--;
+			return _objeto;
+		}
+	}
+
+	/**
+	 * Metodo que verifica si la cola esta vacia
+	 * @return Un valor booleano si la cola esta vacia o no
+	 */
+	public boolean estaVacia() {
+		return (_capacidad == 0);
+	}
+
+	/**
+	 * Metodo que devuelve el valor del tamanio de la cola
+	 * @return El valor del tamanio de la cola
+	 */
+	public int capacidad() {
+		return _capacidad;
+	}
+
+	/**
+	 * Metodo que imprime los elementos de la cola
+	 */
+	public void imprimir() {
+		Nodo temporal = _inicio;
+		System.out.println("Listado de todos los elementos de la cola.");
+		while (temporal != null) {
+			System.out.println(temporal.get_elemento());
+			temporal = temporal.get_siguiente();
+		}
+		System.out.println();
+	}
+}
