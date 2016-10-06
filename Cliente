@@ -1,0 +1,75 @@
+package Cliente;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+import org.json.simple.JSONObject;
+
+
+/**
+ * 
+ * @author Víctor Fuentes Vargas
+ *
+ */
+public class Cliente implements Runnable{
+	private final int _puerto = 1515; //Puerto para la conexión
+	private final String _host = "172.26.106.124"; //Host para la conexión
+	private Object _mensajeServidor; //Mensajes entrantes (recibidos) en el servidor
+	private Socket _client; //Socket del cliente
+	private ObjectOutputStream _salidaCliente; //Flujo de datos de salida
+	private ObjectInputStream _entradaCliente;
+	private JsonParser _parser;
+	/**
+	 * Este es el constructor de la clase
+	 */
+	public Cliente(){
+        try {
+            _client = new Socket(_host,_puerto);
+            _salidaCliente = new ObjectOutputStream(_client.getOutputStream());
+            _parser = new JsonParser();
+            Thread clienteThread = new Thread(this);//Corre el hilo que mantiene en escucha al cliente
+            clienteThread.start();
+            enviarDatos();
+        } catch (UnknownHostException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    /**
+     * Este método se encarga de enviar los datos al servidor
+     */
+    public void enviarDatos(){
+        try {
+        	JsonParser json = new JsonParser();
+        	JSONObject obj = json.crearObj_Json();
+            _salidaCliente.writeObject(obj);
+            _salidaCliente.flush();
+        } catch (UnknownHostException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Este método es el que mantiene al cliente esperando los mensajes del servidor
+     */
+    public void run() {
+        try{
+            _entradaCliente = new ObjectInputStream(_client.getInputStream());
+            while(true) {
+                _mensajeServidor = _entradaCliente.readObject();
+                System.out.println(_mensajeServidor);
+                _parser.leer_Json(_mensajeServidor);
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+}
