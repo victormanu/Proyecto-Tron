@@ -1,0 +1,48 @@
+package Sockets;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import Sockets.ServerClient;
+/**
+ * 
+ * @author Víctor Fuentes Vargas
+ * Esta clase posee el servidor al cual se conectan los clientes para acceder al juego.
+ */
+public class Servidor implements Runnable{
+	private final int _puerto = 1515; //Puerto para la conexión
+	private ServerSocket _server; //Socket del servidor
+	private Socket _client; //Socket del cliente
+	private Lista<Socket> _clientes;
+	private ServerClient _serverClient;
+	private int _cont;
+	private Thread _tServer;
+	/**
+	 * Este método es el constructor de la clase.
+	 */
+	public Servidor(){
+		_clientes = new Lista<Socket>();
+		_tServer = new Thread(this);
+		_tServer.start();
+		_cont = 0;
+	}
+	
+	/**
+	 * Este método es donde se ejecuta el hilo que mantiene al servidor escuchando para aceptar conexiones.
+	 */
+	public void run() {
+		try {
+			System.out.println("Esperando conexion");
+			_server = new ServerSocket(_puerto);
+			while(true){
+			_client = _server.accept(); // Acepta las conexiones que lleguen
+			System.out.println("Conectado");
+			_cont++;
+			_serverClient = new ServerClient(_client,_cont);
+			_clientes.insertLast(_client);
+			}
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+}
